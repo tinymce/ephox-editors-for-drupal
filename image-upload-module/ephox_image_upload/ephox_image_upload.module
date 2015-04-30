@@ -30,15 +30,14 @@ function ephox_image_upload_menu(){
 * want the URL returned.
 */
 function ephox_process_image(){
-     // We need to calculate where public files belong on the Drupal server.
+    // We need to calculate where public files belong on the Drupal server.
     $file_public_path = variable_get('file_public_path', conf_path() . '/files');
     // echo 'DOC PATH: ' . $file_public_path ;
 
     // Create a folder PER USER for storing images
     // Note that if the user can't be identified $user->uid will return 0
-    // TODO: Should we throw an error if the uid is 0?
     global $user;
-      // echo "USER ID: " . $user->uid;
+    // echo "USER ID: " . $user->uid;
 
     // $basePathForFileUpload is the parent directory for all files uploaded and stored by this module
     // the directory is named 'ephox_files' and will be a directory in the server's public files directory
@@ -61,7 +60,7 @@ function ephox_process_image(){
 
           $userDirExists = true;
           if (!file_exists($fileDirectoryPath)) {
-              //Make a new directory for this user as one does not already exist
+            //Make a new directory for this user as one does not already exist
             //echo "<br>DIRECTORY does NOT EXIST for valid user " . $user->uid;
             $userDirExists = mkdir ($fileDirectoryPath);
           }
