@@ -4,7 +4,7 @@
  * ephox_image_upload.module - code to manage upload of local image assets from Ephox
  * editors Textbox.io and EditLive
  *
- * By Michael Fromin of Ephox
+ * By Michael Fromin (Ephox)
  *
  * Textbox.io and EditLive will post each local image in a separate HTTP POST so this script
  * assumes that we will always have a single file in each HTTP POST
@@ -49,23 +49,23 @@ function ephox_process_image(){
     }
 
     if ($ephox_directory_exists) {
-          // $basePathForFile is the beginning of the URL that the editor will later use as the img src attribute
-          $basePathForFile = '/' . $file_public_path . '/ephox_files/' . 'u' . $user->uid;
-          // echo "<br>BASE FILE PATH: " . $basePathForFile;
+        // $basePathForFile is the beginning of the URL that the editor will later use as the img src attribute
+        $basePathForFile = '/' . $file_public_path . '/ephox_files/' . 'u' . $user->uid;
+        // echo "<br>BASE FILE PATH: " . $basePathForFile;
 
-          // $fileDirectoryPath is the "complete" path that the server will use to write the file to the
-          // server's file system.
-          $fileDirectoryPath = DRUPAL_ROOT . $basePathForFile;
-          // echo "<br>DIRECTORY PATH: " . $fileDirectoryPath;
+        // $fileDirectoryPath is the "complete" path that the server will use to write the file to the
+        // server's file system.
+        $fileDirectoryPath = DRUPAL_ROOT . $basePathForFile;
+        // echo "<br>DIRECTORY PATH: " . $fileDirectoryPath;
 
-          $userDirExists = true;
-          if (!file_exists($fileDirectoryPath)) {
+        $userDirExists = true;
+        if (!file_exists($fileDirectoryPath)) {
             //Make a new directory for this user as one does not already exist
             //echo "<br>DIRECTORY does NOT EXIST for valid user " . $user->uid;
             $userDirExists = mkdir ($fileDirectoryPath);
-          }
+        }
 
-          if ($userDirExists) {
+        if ($userDirExists) {
             // The $_FILES variable contains the HTTP POSTed image file.
             $theImage = current($_FILES);
             // echo "Current File: ". print_r($theImage);
@@ -86,15 +86,14 @@ function ephox_process_image(){
                 // Notify editor that the upload failed
                 header("HTTP/1.0 500 Server Error");
             }
-          } else {
-              echo "FAILURE CREATING USER DIRECTORY ON DRUPAL SERVER";
+        } else {
+            echo "FAILURE CREATING USER DIRECTORY ON DRUPAL SERVER";
             // Notify editor that the upload failed
             header("HTTP/1.0 500 Server Error");
-          }
+        }
     } else {
         echo "FAILURE CREATING EPHOX_FILES DIRECTORY ON DRUPAL SERVER";
         // Notify editor that the upload failed
         header("HTTP/1.0 500 Server Error");
     }
-
 }
