@@ -1,5 +1,6 @@
 name = Ephox Editors Image Upload Acceptor
 description = "Manages the upload of local image content from Textbox.io and EditLive"
 package = User interface
+version 1.0
 core = 7.x
 files[] = ephox_image_upload.module

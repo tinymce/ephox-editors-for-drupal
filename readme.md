@@ -7,6 +7,7 @@
 
 ##Requirements
 * Drupal 7*
+* `wysiwyg` Drupal module
 * One of the Ephox editor products
   * Textbox.io 1.2+
   * EditLive 9+
