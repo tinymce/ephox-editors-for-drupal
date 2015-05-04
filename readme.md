@@ -3,7 +3,7 @@
 ##What does this do?
 
 ###tl;dr
-`ephox-editors-for-drupal` provides a quick way to integrate Ephox's editor products (Textbox.io and EditLive) into Drupal 7.
+`ephox-editors-for-drupal` provides a quick way to integrate Ephox's editor products (Textbox.io and EditLive) into Drupal 7 via the `wysiwyg` module.
 
 ##Requirements
 * Drupal 7
