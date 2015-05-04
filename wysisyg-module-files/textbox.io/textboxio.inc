@@ -1,4 +1,4 @@
-<?
+<?php
 /**
 *@file
 * Editor Integration functions for textboxio.
@@ -27,7 +27,7 @@ function wysiwyg_textboxio_editor() {
       '1' => array(
         'js files' => array('textboxio-1.js'),
       ),
-    ), 
+    ),
   );
   return $editor;
 }
@@ -72,5 +72,5 @@ function wysiwyg_textboxio_version($editor) {
 // 					//						),
 
 //     				);
- 
+
 // }
