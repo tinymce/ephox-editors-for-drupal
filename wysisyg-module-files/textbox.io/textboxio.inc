@@ -6,28 +6,28 @@
 
 function wysiwyg_textboxio_editor() {
   $editor['textboxio'] = array(
-    'title' => 'TextBox.io',
-    'vendor url' => 'https://ephox.com',
-    'download url' => 'https://ephox.com/download',
-    'library path' => wysiwyg_get_path('textboxio'),
+	'title' => 'TextBox.io',
+	'vendor url' => 'https://ephox.com',
+	'download url' => 'https://ephox.com/download',
+	'library path' => wysiwyg_get_path('textboxio'),
    // Commented out for TBIO 1.1/1.2 as TBIO won't calculate the path to its other
    // files appropriately.  See textboxio-1.js for workaround
    'libraries' => array(
-     '' => array(
-       'title' => 'Default',
-       'files' => array(
-           'textboxio.js' => array('preprocess' => FALSE),
-       ),
-     ),
+	 '' => array(
+	   'title' => 'Default',
+	   'files' => array(
+		   'textboxio.js' => array('preprocess' => FALSE),
+	   ),
+	 ),
    ),
-    'version callback' => 'wysiwyg_textboxio_version',
-    'plugin callback' => 'wysiwyg_textboxio_plugins',
-    'settings callback' => 'wysiwyg_textboxio_settings',
-    'versions' => array(
-      '1' => array(
-        'js files' => array('textboxio-1.js'),
-      ),
-    ),
+	'version callback' => 'wysiwyg_textboxio_version',
+	'plugin callback' => 'wysiwyg_textboxio_plugins',
+	'settings callback' => 'wysiwyg_textboxio_settings',
+	'versions' => array(
+	  '1' => array(
+		'js files' => array('textboxio-1.js'),
+	  ),
+	),
   );
   return $editor;
 }

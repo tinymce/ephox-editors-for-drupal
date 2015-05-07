@@ -13,11 +13,11 @@
 
 /* This menu hook - adds the path "/ephox_image_upload" to the site. */
 function ephox_image_upload_menu(){
-    $items['ephox_image_upload'] = array(
-        'page callback' => 'ephox_process_image',
-        'access arguments' => array('access content'),
-    );
-    return $items;
+	$items['ephox_image_upload'] = array(
+		'page callback' => 'ephox_process_image',
+		'access arguments' => array('access content'),
+	);
+	return $items;
 }
 
 /**
@@ -30,70 +30,70 @@ function ephox_image_upload_menu(){
 * want the URL returned.
 */
 function ephox_process_image(){
-    // We need to calculate where public files belong on the Drupal server.
-    $file_public_path = variable_get('file_public_path', conf_path() . '/files');
-    // echo 'DOC PATH: ' . $file_public_path ;
+	// We need to calculate where public files belong on the Drupal server.
+	$file_public_path = variable_get('file_public_path', conf_path() . '/files');
+	// echo 'DOC PATH: ' . $file_public_path ;
 
-    // Create a folder PER USER for storing images
-    // Note that if the user can't be identified $user->uid will return 0
-    global $user;
-    // echo "USER ID: " . $user->uid;
+	// Create a folder PER USER for storing images
+	// Note that if the user can't be identified $user->uid will return 0
+	global $user;
+	// echo "USER ID: " . $user->uid;
 
-    // $basePathForFileUpload is the parent directory for all files uploaded and stored by this module
-    // the directory is named 'ephox_files' and will be a directory in the server's public files directory
-    $ephox_directory_exists = true;
-    $basePathForFileUpload = DRUPAL_ROOT . '/' . $file_public_path . '/ephox_files';
-    if (!file_exists($basePathForFileUpload)) {
-        //If the ephox_files directory is not there we need to make it!
-        $ephox_directory_exists = mkdir ($basePathForFileUpload);
-    }
+	// $basePathForFileUpload is the parent directory for all files uploaded and stored by this module
+	// the directory is named 'ephox_files' and will be a directory in the server's public files directory
+	$ephox_directory_exists = true;
+	$basePathForFileUpload = DRUPAL_ROOT . '/' . $file_public_path . '/ephox_files';
+	if (!file_exists($basePathForFileUpload)) {
+		//If the ephox_files directory is not there we need to make it!
+		$ephox_directory_exists = mkdir ($basePathForFileUpload);
+	}
 
-    if ($ephox_directory_exists) {
-        // $basePathForFile is the beginning of the URL that the editor will later use as the img src attribute
-        $basePathForFile = '/' . $file_public_path . '/ephox_files/' . 'u' . $user->uid;
-        // echo "<br>BASE FILE PATH: " . $basePathForFile;
+	if ($ephox_directory_exists) {
+		// $basePathForFile is the beginning of the URL that the editor will later use as the img src attribute
+		$basePathForFile = '/' . $file_public_path . '/ephox_files/' . 'u' . $user->uid;
+		// echo "<br>BASE FILE PATH: " . $basePathForFile;
 
-        // $fileDirectoryPath is the "complete" path that the server will use to write the file to the
-        // server's file system.
-        $fileDirectoryPath = DRUPAL_ROOT . $basePathForFile;
-        // echo "<br>DIRECTORY PATH: " . $fileDirectoryPath;
+		// $fileDirectoryPath is the "complete" path that the server will use to write the file to the
+		// server's file system.
+		$fileDirectoryPath = DRUPAL_ROOT . $basePathForFile;
+		// echo "<br>DIRECTORY PATH: " . $fileDirectoryPath;
 
-        $userDirExists = true;
-        if (!file_exists($fileDirectoryPath)) {
-            //Make a new directory for this user as one does not already exist
-            //echo "<br>DIRECTORY does NOT EXIST for valid user " . $user->uid;
-            $userDirExists = mkdir ($fileDirectoryPath);
-        }
+		$userDirExists = true;
+		if (!file_exists($fileDirectoryPath)) {
+			//Make a new directory for this user as one does not already exist
+			//echo "<br>DIRECTORY does NOT EXIST for valid user " . $user->uid;
+			$userDirExists = mkdir ($fileDirectoryPath);
+		}
 
-        if ($userDirExists) {
-            // The $_FILES variable contains the HTTP POSTed image file.
-            $theImage = current($_FILES);
-            // echo "Current File: ". print_r($theImage);
+		if ($userDirExists) {
+			// The $_FILES variable contains the HTTP POSTed image file.
+			$theImage = current($_FILES);
+			// echo "Current File: ". print_r($theImage);
 
-            if (is_uploaded_file($theImage['tmp_name'])){
-                $filePathForEditor = $basePathForFile . '/' . $theImage['name'];
-                $filetowrite = $fileDirectoryPath . '/' . $theImage['name'];
-                // echo 'FILE TO WRITE: ' . $filetowrite;
-                if (move_uploaded_file($theImage['tmp_name'], $filetowrite)) {
-                    echo $filePathForEditor;
-                } else {
-                    echo "FAILURE MOVING FILE TO USER DIRECTORY ON DRUPAL SERVER";
-                    // Notify EditLive! that the upload failed
-                    header("HTTP/1.0 500 Server Error");
-                }
-            } else {
-                echo "FAILURE ACCESSING UPLOADED FILE ON DRUPAL SERVER";
-                // Notify editor that the upload failed
-                header("HTTP/1.0 500 Server Error");
-            }
-        } else {
-            echo "FAILURE CREATING USER DIRECTORY ON DRUPAL SERVER";
-            // Notify editor that the upload failed
-            header("HTTP/1.0 500 Server Error");
-        }
-    } else {
-        echo "FAILURE CREATING EPHOX_FILES DIRECTORY ON DRUPAL SERVER";
-        // Notify editor that the upload failed
-        header("HTTP/1.0 500 Server Error");
-    }
+			if (is_uploaded_file($theImage['tmp_name'])){
+				$filePathForEditor = $basePathForFile . '/' . $theImage['name'];
+				$filetowrite = $fileDirectoryPath . '/' . $theImage['name'];
+				// echo 'FILE TO WRITE: ' . $filetowrite;
+				if (move_uploaded_file($theImage['tmp_name'], $filetowrite)) {
+					echo $filePathForEditor;
+				} else {
+					echo "FAILURE MOVING FILE TO USER DIRECTORY ON DRUPAL SERVER";
+					// Notify EditLive! that the upload failed
+					header("HTTP/1.0 500 Server Error");
+				}
+			} else {
+				echo "FAILURE ACCESSING UPLOADED FILE ON DRUPAL SERVER";
+				// Notify editor that the upload failed
+				header("HTTP/1.0 500 Server Error");
+			}
+		} else {
+			echo "FAILURE CREATING USER DIRECTORY ON DRUPAL SERVER";
+			// Notify editor that the upload failed
+			header("HTTP/1.0 500 Server Error");
+		}
+	} else {
+		echo "FAILURE CREATING EPHOX_FILES DIRECTORY ON DRUPAL SERVER";
+		// Notify editor that the upload failed
+		header("HTTP/1.0 500 Server Error");
+	}
 }
